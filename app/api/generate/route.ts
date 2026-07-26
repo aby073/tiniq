@@ -36,9 +36,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Mahsulot rasmi yuklanmadi' }, { status: 400 })
     }
 
+    // FLUX Kontext "tasvirlash" emas, "tahrirlash buyrug'i" bilan yaxshi ishlaydi.
+    // Foydalanuvchi promptini aniq fon-almashtirish buyrug'iga o'raymiz, shunda
+    // model mahsulotni saqlab qolib, fon va sahnani to'liq qayta yaratadi.
+    const enhancedPrompt = [
+      'Professional studio product photograph.',
+      'Keep the main product exactly the same — identical shape, color, material, text and label, do not change or distort the product itself.',
+      'Completely replace the entire background and surroundings, removing the original floor, table and any clutter.',
+      `Place the product in this new scene: ${prompt.trim()}.`,
+      'High-end commercial advertising photography, realistic soft studio lighting, natural contact shadow under the product, clean composition, sharp focus, photorealistic.',
+    ].join(' ')
+
     const output = await replicate.run(MODEL, {
       input: {
-        prompt: prompt.trim(),
+        prompt: enhancedPrompt,
         input_image: imageUrl,
         aspect_ratio: aspectRatio || 'match_input_image',
         output_format: 'png',
