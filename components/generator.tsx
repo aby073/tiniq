@@ -10,7 +10,14 @@ import {
   X,
   ImageIcon,
   AlertCircle,
+  Store,
 } from 'lucide-react'
+
+// Uzum Market / Wildberries kabi marketplace uchun toza oq fon uslubi.
+// Bu matn FLUX Kontext modeliga mahsulotni saqlab, fonni toza oq studiyaga
+// almashtirishni aniq buyuradi.
+const UZUM_MARKET_PROMPT =
+  "Uzum Market uslubidagi toza mahsulot fotosi: mahsulotni aynan o'zidek saqla, faqat fonni to'liq olib tashlab, sof oq (#ffffff) studiya foniga joylashtir. Mahsulot markazda, tik va to'liq ko'rinishda, ostida juda yengil tabiiy soya, boshqa hech qanday buyum, matn yoki bezak bo'lmasin. Yumshoq bir tekis yorug'lik, real e-commerce katalog uslubi."
 
 const PROMPT_IDEAS = [
   'Marmar poydevor ustida, yumshoq iliq yorug‘lik va nafis soyalar bilan',
@@ -185,6 +192,17 @@ export function Generator() {
               <label htmlFor="prompt" className="mb-2 block text-sm font-medium">
                 2. Qanday foto xohlaysiz?
               </label>
+              <button
+                type="button"
+                onClick={() => {
+                  setPrompt(UZUM_MARKET_PROMPT)
+                  setAspectRatio('3:4')
+                }}
+                className="mb-3 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-primary bg-primary/10 px-4 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-primary/20"
+              >
+                <Store className="h-4 w-4 text-primary" />
+                Uzum market uslubi (toza oq fon)
+              </button>
               <textarea
                 id="prompt"
                 value={prompt}
