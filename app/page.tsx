@@ -1,6 +1,6 @@
 import { SiteHeader } from '@/components/site-header'
 import { Hero } from '@/components/hero'
-import { Generator } from '@/components/generator'
+import { SellerWorkspace } from '@/components/seller-workspace'
 import { Showcase } from '@/components/showcase'
 import { Features } from '@/components/features'
 import { Gallery } from '@/components/gallery'
@@ -11,7 +11,7 @@ export default function Page() {
     <main className="min-h-screen">
       <SiteHeader />
       <Hero />
-      <Generator />
+      <SellerWorkspace />
       <Showcase />
       <Features />
       <Gallery />
