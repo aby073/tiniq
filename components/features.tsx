@@ -33,7 +33,7 @@ export function Features() {
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-24">
         <div className="mx-auto mb-12 max-w-2xl text-center">
           <h2 className="text-balance font-serif text-3xl font-semibold tracking-tight sm:text-4xl">
-            Nima uchun ManaRasm?
+            Nima uchun SkySolve?
           </h2>
           <p className="mt-3 text-pretty leading-relaxed text-muted-foreground">
             Onlayn savdo va ijtimoiy tarmoqlar uchun professional fotolar — hamyonbop.

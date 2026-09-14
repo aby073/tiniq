@@ -11,13 +11,11 @@ export function Hero() {
           </span>
 
           <h1 className="text-balance font-serif text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-            Mahsulotingiz uchun studiya sifatidagi fotolar
+            Mahsulotingizni tushunadigan AI yordamchi
           </h1>
 
           <p className="text-pretty text-lg leading-relaxed text-muted-foreground">
-            Oddiy telefon rasmini yuklang, nima xohlayotganingizni yozing va bir
-            necha soniyada professional reklama fotosini oling. Fotograf, studiya
-            yoki qimmat jihozlar shart emas.
+            Mahsulot rasmini yuklang: SkySolve uning nomi, foydalari va xususiyatlarini topib, Uzum Market uchun tayyor opisaniya yozadi. Istasangiz, shu mahsulot uchun professional reklama fotosini ham yarating.
           </p>
 
           <div className="flex flex-wrap items-center gap-3">

@@ -16,7 +16,7 @@ export function SiteHeader() {
             <Aperture className="h-5 w-5" strokeWidth={2} />
           </span>
           <span className="font-serif text-xl font-semibold tracking-tight">
-            ManaRasm
+            SkySolve
           </span>
         </a>
 
