@@ -10,9 +10,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'ManaRasm — AI mahsulot fotostudiyasi',
+  title: 'SkySolve — Uzum uchun AI mahsulot yordamchisi',
   description:
-    'Mahsulot rasmingizni yuklang va bir necha soniyada professional studiya sifatidagi reklama fotolarini yarating. FLUX AI yordamida.',
+    'Mahsulot rasmini yuklang, uning foydalari va xususiyatlarini aniqlang yoki Uzum Market uchun professional reklama fotosi yarating.',
   generator: 'v0.app',
   icons: {
     icon: [
