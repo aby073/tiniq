@@ -7,10 +7,11 @@ import { Gallery } from '@/components/gallery'
 import { SiteFooter } from '@/components/site-footer'
 import { TrustStrip } from '@/components/trust-strip'
 import { Pricing } from '@/components/pricing'
+import { LanguageProvider } from '@/components/language-provider'
 
 export default function Page() {
   return (
-    <main className="min-h-screen">
+    <LanguageProvider><main className="min-h-screen">
       <SiteHeader />
       <Hero />
       <TrustStrip />
@@ -20,6 +21,6 @@ export default function Page() {
       <Gallery />
       <Pricing />
       <SiteFooter />
-    </main>
+    </main></LanguageProvider>
   )
 }
