@@ -12,6 +12,7 @@ const replicate = new Replicate({
 // FLUX Kontext — mahsulot rasmini prompt asosida yangi sahnaga joylashtiradi (image-to-image)
 const MODEL = 'black-forest-labs/flux-kontext-pro'
 const WHITE_CATALOG_TERMS = ['100% sof oq', '#ffffff', 'oq fon va biroz soya', 'oq fon', 'white background', 'pure white']
+const PREMIUM_BACKGROUND_TERMS = ['premium fonni olib tashlash', 'premium fon']
 
 export async function POST(request: NextRequest) {
   try {
@@ -40,13 +41,15 @@ export async function POST(request: NextRequest) {
     // FLUX Kontext "tasvirlash" emas, "tahrirlash buyrug'i" bilan yaxshi ishlaydi.
     // Foydalanuvchi promptini aniq fon-almashtirish buyrug'iga o'raymiz, shunda
     // model mahsulotni saqlab qolib, fon va sahnani to'liq qayta yaratadi.
-    const isWhiteCatalog = WHITE_CATALOG_TERMS.some((term) => prompt.toLowerCase().includes(term))
+    const normalizedPrompt = prompt.toLowerCase()
+    const isWhiteCatalog = WHITE_CATALOG_TERMS.some((term) => normalizedPrompt.includes(term))
+    const isPremiumBackground = PREMIUM_BACKGROUND_TERMS.some((term) => normalizedPrompt.includes(term))
     const enhancedPrompt = [
       'Professional studio product photograph.',
       'Keep the main product exactly the same — identical shape, color, material, text and label, do not change or distort the product itself.',
       'Completely replace the entire background and surroundings, removing the original floor, table and any clutter.',
-      isWhiteCatalog ? 'Place the product on a completely pure white (#FFFFFF) background with no other colors, props, decorations, texture, gradient or text. Keep only a very subtle soft natural gray contact shadow directly beneath the product.' : `Place the product in this new scene: ${prompt.trim()}.`,
-      isWhiteCatalog ? 'Uzum Market catalog style: centered product, even neutral lighting, no colored reflections or extra objects, clean white negative space, sharp focus, photorealistic.' : 'High-end commercial advertising photography, realistic soft studio lighting, natural contact shadow under the product, clean composition, sharp focus, photorealistic.',
+      isWhiteCatalog ? 'Place the product on a completely pure white (#FFFFFF) background with no other colors, props, decorations, texture, gradient or text. Keep only a very subtle soft natural gray contact shadow directly beneath the product.' : isPremiumBackground ? 'Remove the entire original background, floor and surrounding objects. Place the unchanged product on a clean white studio background with soft professional lighting and a natural subtle shadow beneath it.' : `Place the product in this new scene: ${prompt.trim()}.`,
+      isWhiteCatalog ? 'Uzum Market catalog style: centered product, even neutral lighting, no colored reflections or extra objects, clean white negative space, sharp focus, photorealistic.' : isPremiumBackground ? 'Premium background removal, realistic product edges, preserve the exact product shape, color, material, label and details. No extra objects or text.' : 'High-end commercial advertising photography, realistic soft studio lighting, natural contact shadow under the product, clean composition, sharp focus, photorealistic.',
     ].join(' ')
 
     const output = await replicate.run(MODEL, {
