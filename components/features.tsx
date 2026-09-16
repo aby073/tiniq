@@ -21,9 +21,9 @@ const features = [
   },
   {
     icon: ShieldCheck,
-    title: 'Yuqori sifat',
+    title: 'Uzumga tayyor',
     description:
-      'FLUX modeli reklama va marketpleyslar uchun tayyor toza natija beradi.',
+      'Rasm, tavsif va atributlar — marketplace kartasiga mos bitta ish jarayonida.',
   },
 ]
 
@@ -36,7 +36,7 @@ export function Features() {
             Nima uchun SkySolve?
           </h2>
           <p className="mt-3 text-pretty leading-relaxed text-muted-foreground">
-            Onlayn savdo va ijtimoiy tarmoqlar uchun professional fotolar — hamyonbop.
+            Mahsulot kartangizni tezroq, chiroyliroq va sotuvga tayyorroq qiling.
           </p>
         </div>
 

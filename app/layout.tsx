@@ -13,7 +13,14 @@ export const metadata: Metadata = {
   title: 'SkySolve — Uzum uchun AI mahsulot yordamchisi',
   description:
     'Mahsulot rasmini yuklang, uning foydalari va xususiyatlarini aniqlang yoki Uzum Market uchun professional reklama fotosi yarating.',
-  generator: 'v0.app',
+  generator: 'SkySolve',
+  metadataBase: new URL('https://skysolve.vercel.app'),
+  openGraph: {
+    title: 'SkySolve — Uzum uchun AI yordamchi',
+    description: 'Mahsulotingiz uchun professional foto va tayyor opisaniya yarating.',
+    type: 'website',
+    locale: 'uz_UZ',
+  },
   icons: {
     icon: [
       {
@@ -34,8 +41,8 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'light',
-  themeColor: '#ffffff',
+  colorScheme: 'dark',
+  themeColor: '#201e19',
 }
 
 export default function RootLayout({
@@ -44,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="uz" className={`light ${inter.variable} bg-background`}>
+    <html lang="uz" className={`dark ${inter.variable} bg-background`}>
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
