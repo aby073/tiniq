@@ -3,12 +3,14 @@
 import useSWR from 'swr'
 import { useState } from 'react'
 import { Download, Trash2, ImageIcon, Loader2 } from 'lucide-react'
+import { useLanguage } from '@/components/language-provider'
 
 type GalleryItem = { url: string; uploadedAt: string }
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
 export function Gallery() {
+  const { t } = useLanguage()
   const { data, isLoading, mutate } = useSWR<{ items: GalleryItem[] }>(
     '/api/gallery',
     fetcher,
@@ -36,10 +38,10 @@ export function Gallery() {
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-24">
         <div className="mx-auto mb-12 max-w-2xl text-center">
           <h2 className="text-balance font-serif text-3xl font-semibold tracking-tight sm:text-4xl">
-            Galereya
+            {t('gallery')}
           </h2>
           <p className="mt-3 text-pretty leading-relaxed text-muted-foreground">
-            Yaratilgan barcha fotolaringiz shu yerda saqlanadi.
+            {t('galleryDesc')}
           </p>
         </div>
 
@@ -53,7 +55,7 @@ export function Gallery() {
               <ImageIcon className="h-5 w-5" />
             </span>
             <p className="text-sm">
-              Hali foto yo&apos;q. Studioda birinchi fotoni yarating.
+              {t('noPhotos')}
             </p>
           </div>
         ) : (
