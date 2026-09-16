@@ -44,11 +44,11 @@ export function Hero() {
         </div>
 
         <div className="relative">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="relative grid grid-cols-2 gap-3 sm:gap-4">
             <img
               src="/showcase/perfume.png"
               alt="Atir shishasi studiya fotosi"
-              className="aspect-[3/4] w-full rounded-2xl border border-border object-cover shadow-lg"
+              className="aspect-[4/5] w-full rounded-2xl border border-border/80 object-cover shadow-lg transition-transform duration-500 hover:scale-[1.02]"
             />
             <img
               src="/showcase/watch.png"
@@ -58,7 +58,7 @@ export function Hero() {
             <img
               src="/showcase/sneaker.png"
               alt="Krossovka studiya fotosi"
-              className="aspect-[3/4] w-full rounded-2xl border border-border object-cover shadow-lg"
+              className="aspect-[4/5] w-full rounded-2xl border border-border/80 object-cover shadow-lg transition-transform duration-500 hover:scale-[1.02]"
             />
             <img
               src="/showcase/cosmetic.png"

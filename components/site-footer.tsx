@@ -1,22 +1,5 @@
-import { Aperture } from 'lucide-react'
+import { Aperture, ArrowUpRight } from 'lucide-react'
 
 export function SiteFooter() {
-  return (
-    <footer className="border-t border-border bg-secondary/30">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-10 sm:flex-row sm:justify-between sm:px-6">
-        <div className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Aperture className="h-4 w-4" />
-          </span>
-          <span className="font-serif text-lg font-semibold">SkySolve</span>
-        </div>
-        <p className="text-sm text-muted-foreground">
-          FLUX AI asosida mahsulot fotostudiyasi
-        </p>
-        <p className="text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} SkySolve
-        </p>
-      </div>
-    </footer>
-  )
+  return <footer className="border-t border-border bg-card/40"><div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr_1fr]"><div><div className="flex items-center gap-2"><span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground"><Aperture className="size-4" /></span><span className="font-serif text-lg font-semibold">SkySolve</span></div><p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">Uzum sotuvchilari uchun mahsulot rasmini, opisaniyasini va kreativini bir joyda tayyorlang.</p></div><div><p className="mb-3 text-xs font-semibold uppercase tracking-wider text-foreground">Mahsulot</p><div className="flex flex-col gap-2 text-sm text-muted-foreground"><a href="#studio" className="hover:text-foreground">Studio</a><a href="#namunalar" className="hover:text-foreground">Namunalar</a><a href="#narxlar" className="hover:text-foreground">Narxlar</a></div></div><div><p className="mb-3 text-xs font-semibold uppercase tracking-wider text-foreground">Yordam</p><div className="flex flex-col gap-2 text-sm text-muted-foreground"><a href="#imkoniyatlar" className="hover:text-foreground">Imkoniyatlar</a><a href="#studio" className="hover:text-foreground">Qanday ishlaydi?</a><a href="mailto:hello@skysolve.uz" className="inline-flex items-center gap-1 hover:text-foreground">Bog‘lanish <ArrowUpRight className="size-3" /></a></div></div><div><p className="mb-3 text-xs font-semibold uppercase tracking-wider text-foreground">SkySolve</p><p className="text-sm leading-relaxed text-muted-foreground">Mahsulotingiz haqida ko‘proq gapiring. Biz esa uni chiroyli ko‘rsatamiz.</p></div></div><div className="border-t border-border"><div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6"><span>© {new Date().getFullYear()} SkySolve. Barcha huquqlar himoyalangan.</span><span>AI yordamchi · Uzum uchun yaratilgan</span></div></div></footer>
 }
