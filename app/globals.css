@@ -1,4 +1,34 @@
 @import 'tailwindcss';
+
+@keyframes starfield-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: .45; }
+  50% { transform: translate3d(8px, -10px, 0); opacity: .85; }
+}
+
+.starfield-star {
+  position: absolute;
+  display: block;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 70%, white);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--primary) 55%, transparent);
+  animation: starfield-drift ease-in-out infinite;
+}
+
+.starfield-glow {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  width: 38rem;
+  height: 18rem;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--primary) 8%, transparent), transparent 70%);
+  filter: blur(18px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .starfield-star { animation: none; }
+}
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
