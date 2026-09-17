@@ -2,12 +2,14 @@
 
 import useSWR from 'swr'
 import { useState } from 'react'
+import Image from 'next/image'
 import { Download, Trash2, ImageIcon, Loader2 } from 'lucide-react'
 import { useLanguage } from '@/components/language-provider'
+import { galleryHeaders } from '@/lib/gallery-identity'
 
 type GalleryItem = { url: string; uploadedAt: string }
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json())
+const fetcher = (url: string) => fetch(url, { headers: galleryHeaders() }).then((r) => r.json())
 
 export function Gallery() {
   const { t } = useLanguage()
@@ -24,7 +26,7 @@ export function Gallery() {
     try {
       await fetch('/api/gallery', {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...galleryHeaders() },
         body: JSON.stringify({ url }),
       })
       mutate()
@@ -65,9 +67,13 @@ export function Gallery() {
                 key={item.url}
                 className="group relative overflow-hidden rounded-xl border border-border bg-card"
               >
-                <img
+                <Image
                   src={item.url || '/placeholder.svg'}
                   alt="Yaratilgan mahsulot fotosi"
+                  width={480}
+                  height={480}
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                  loading="lazy"
                   className="aspect-square w-full object-cover"
                 />
                 <div className="absolute inset-0 flex items-end justify-end gap-2 bg-gradient-to-t from-black/60 to-transparent p-3 opacity-0 transition-opacity group-hover:opacity-100">

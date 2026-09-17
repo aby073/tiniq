@@ -16,7 +16,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Faqat rasm fayllari qabul qilinadi' }, { status: 400 })
     }
 
-    const blob = await put(`uploads/${Date.now()}-${file.name}`, file, {
+    const userId = request.headers.get('x-gallery-user-id')
+    if (!userId || !/^[a-zA-Z0-9_-]{8,128}$/.test(userId)) {
+      return NextResponse.json({ error: 'Foydalanuvchi sessiyasi topilmadi' }, { status: 400 })
+    }
+
+    const blob = await put(`uploads/${userId}/${Date.now()}-${file.name}`, file, {
       access: 'public',
       addRandomSuffix: true,
     })
