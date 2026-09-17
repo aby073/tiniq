@@ -3,6 +3,8 @@
 import { useCallback, useRef, useState } from 'react'
 import { useSWRConfig } from 'swr'
 import { galleryHeaders } from '@/lib/gallery-identity'
+import { createClient } from '@/lib/supabase/client'
+import { useSupabaseAuth } from '@/components/supabase-auth'
 import {
   Upload,
   Loader2,
@@ -39,6 +41,7 @@ export function Generator() {
   const [analysis, setAnalysis] = useState<Analysis | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
+  const { user } = useSupabaseAuth()
 
   const handleFile = useCallback(async (file: File) => {
     setError(null); setResultUrl(null); setAnalysis(null)
@@ -61,7 +64,7 @@ export function Generator() {
       if (mode === 'create' && !prompt.trim()) { setError('Qanday foto xohlayotganingizni yozing'); setIsBusy(false); return }
       const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', ...galleryHeaders() }, body: JSON.stringify(body) }); const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Amal bajarilmadi')
-      if (mode === 'analyze') setAnalysis(data.analysis); else { setResultUrl(data.url); mutate('/api/gallery') }
+      if (mode === 'analyze') setAnalysis(data.analysis); else { setResultUrl(data.url); if (user) await createClient().from('gallery_images').insert({ user_id: user.id, source_url: data.url }); mutate('supabase-gallery') }
     } catch (err) { setError(err instanceof Error ? err.message : 'Amal bajarilmadi') } finally { setIsBusy(false) }
   }
   const copyAnalysis = async () => { if (!analysis) return; await navigator.clipboard.writeText(`${analysis.uzumTitle}\n\n${analysis.description}\n\nFoydalari:\n${analysis.benefits.map((x) => `• ${x}`).join('\n')}`); setCopied(true); setTimeout(() => setCopied(false), 1800) }
