@@ -8,10 +8,11 @@ import { SiteFooter } from '@/components/site-footer'
 import { TrustStrip } from '@/components/trust-strip'
 import { Pricing } from '@/components/pricing'
 import { LanguageProvider } from '@/components/language-provider'
+import { SupabaseAuth } from '@/components/supabase-auth'
 
 export default function Page() {
   return (
-    <LanguageProvider><main className="min-h-screen">
+    <LanguageProvider><SupabaseAuth><main className="min-h-screen">
       <SiteHeader />
       <Hero />
       <TrustStrip />
@@ -21,6 +22,6 @@ export default function Page() {
       <Gallery />
       <Pricing />
       <SiteFooter />
-    </main></LanguageProvider>
+    </main></SupabaseAuth></LanguageProvider>
   )
 }

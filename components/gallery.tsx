@@ -5,18 +5,21 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Download, Trash2, ImageIcon, Loader2 } from 'lucide-react'
 import { useLanguage } from '@/components/language-provider'
-import { galleryHeaders } from '@/lib/gallery-identity'
+import { createClient } from '@/lib/supabase/client'
+import { useSupabaseAuth } from '@/components/supabase-auth'
 
-type GalleryItem = { url: string; uploadedAt: string }
+type GalleryItem = { id: string; url: string; uploadedAt: string }
 
-const fetcher = (url: string) => fetch(url, { headers: galleryHeaders() }).then((r) => r.json())
+const fetcher = async (): Promise<{ items: GalleryItem[] }> => {
+  const { data, error } = await createClient().from('gallery_images').select('id, source_url, created_at').order('created_at', { ascending: false })
+  if (error) throw error
+  return { items: (data ?? []).map((item) => ({ id: item.id, url: item.source_url, uploadedAt: item.created_at })) }
+}
 
 export function Gallery() {
   const { t } = useLanguage()
-  const { data, isLoading, mutate } = useSWR<{ items: GalleryItem[] }>(
-    '/api/gallery',
-    fetcher,
-  )
+  const { user, loading: authLoading } = useSupabaseAuth()
+  const { data, isLoading, mutate } = useSWR<{ items: GalleryItem[] }>(user ? 'supabase-gallery' : null, fetcher)
   const [deleting, setDeleting] = useState<string | null>(null)
 
   const items = data?.items ?? []
@@ -24,11 +27,8 @@ export function Gallery() {
   const handleDelete = async (url: string) => {
     setDeleting(url)
     try {
-      await fetch('/api/gallery', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json', ...galleryHeaders() },
-        body: JSON.stringify({ url }),
-      })
+      const { error } = await createClient().from('gallery_images').delete().eq('id', items.find((item) => item.url === url)?.id)
+      if (error) throw error
       mutate()
     } finally {
       setDeleting(null)
@@ -47,7 +47,11 @@ export function Gallery() {
           </p>
         </div>
 
-        {isLoading ? (
+        {authLoading ? (
+          <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
+        ) : !user ? (
+          <div className="rounded-2xl border border-dashed border-border py-16 text-center text-muted-foreground"><p className="text-sm">Galereyani ko‘rish uchun tizimga kiring.</p></div>
+        ) : isLoading ? (
           <div className="flex justify-center py-16">
             <Loader2 className="h-6 w-6 animate-spin text-primary" />
           </div>
