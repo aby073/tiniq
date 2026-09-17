@@ -9,10 +9,11 @@ import { TrustStrip } from '@/components/trust-strip'
 import { Pricing } from '@/components/pricing'
 import { LanguageProvider } from '@/components/language-provider'
 import { SupabaseAuth } from '@/components/supabase-auth'
+import { AuthGate } from '@/components/auth-gate'
 
 export default function Page() {
   return (
-    <LanguageProvider><SupabaseAuth><main className="min-h-screen">
+    <LanguageProvider><SupabaseAuth><AuthGate><main className="min-h-screen">
       <SiteHeader />
       <Hero />
       <TrustStrip />
@@ -22,6 +23,6 @@ export default function Page() {
       <Gallery />
       <Pricing />
       <SiteFooter />
-    </main></SupabaseAuth></LanguageProvider>
+    </main></AuthGate></SupabaseAuth></LanguageProvider>
   )
 }
