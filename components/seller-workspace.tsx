@@ -5,6 +5,7 @@ import { useSWRConfig } from 'swr'
 import { UzumPreview } from '@/components/uzum-preview'
 import { Starfield } from '@/components/starfield'
 import { useLanguage } from '@/components/language-provider'
+import { galleryHeaders } from '@/lib/gallery-identity'
 import {
   Upload,
   Loader2,
@@ -61,7 +62,7 @@ export function SellerWorkspace() {
     setPreviewUrl(URL.createObjectURL(file)); setIsUploading(true)
     try {
       const formData = new FormData(); formData.append('file', file)
-      const res = await fetch('/api/upload', { method: 'POST', body: formData }); const data = await res.json()
+      const res = await fetch('/api/upload', { method: 'POST', body: formData, headers: galleryHeaders() }); const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Yuklashda xatolik'); setUploadedUrl(data.url)
     } catch (err) { setError(err instanceof Error ? err.message : 'Yuklashda xatolik'); setPreviewUrl(null) } finally { setIsUploading(false) }
   }, [])
@@ -81,7 +82,7 @@ export function SellerWorkspace() {
       const endpoint = mode === 'analyze' ? '/api/analyze' : '/api/generate'
       const body = mode === 'analyze' ? { imageUrl: uploadedUrl } : { prompt, imageUrl: uploadedUrl, aspectRatio }
       if (mode === 'create' && !prompt.trim()) { setError('Qanday foto xohlayotganingizni yozing'); setIsBusy(false); return }
-      const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', ...galleryHeaders() }, body: JSON.stringify(body) })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Amal bajarilmadi')
       if (mode === 'analyze') {

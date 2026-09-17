@@ -24,6 +24,11 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
+    const userId = request.headers.get('x-gallery-user-id')
+    if (!userId || !/^[a-zA-Z0-9_-]{8,128}$/.test(userId)) {
+      return NextResponse.json({ error: 'Foydalanuvchi sessiyasi topilmadi' }, { status: 400 })
+    }
+
     const { prompt, imageUrl, aspectRatio } = body as {
       prompt?: string
       imageUrl?: string
@@ -89,7 +94,7 @@ export async function POST(request: NextRequest) {
     }
     const arrayBuffer = await imageRes.arrayBuffer()
 
-    const blob = await put(`generations/${Date.now()}.png`, Buffer.from(arrayBuffer), {
+    const blob = await put(`generations/${userId}/${Date.now()}.png`, Buffer.from(arrayBuffer), {
       access: 'public',
       contentType: 'image/png',
       addRandomSuffix: true,

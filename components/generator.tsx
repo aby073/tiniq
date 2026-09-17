@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from 'react'
 import { useSWRConfig } from 'swr'
+import { galleryHeaders } from '@/lib/gallery-identity'
 import {
   Upload,
   Loader2,
@@ -45,7 +46,7 @@ export function Generator() {
     setPreviewUrl(URL.createObjectURL(file)); setIsUploading(true)
     try {
       const formData = new FormData(); formData.append('file', file)
-      const res = await fetch('/api/upload', { method: 'POST', body: formData }); const data = await res.json()
+      const res = await fetch('/api/upload', { method: 'POST', body: formData, headers: galleryHeaders() }); const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Yuklashda xatolik'); setUploadedUrl(data.url)
     } catch (err) { setError(err instanceof Error ? err.message : 'Yuklashda xatolik'); setPreviewUrl(null) } finally { setIsUploading(false) }
   }, [])
@@ -58,7 +59,7 @@ export function Generator() {
       const endpoint = mode === 'analyze' ? '/api/analyze' : '/api/generate'
       const body = mode === 'analyze' ? { imageUrl: uploadedUrl } : { prompt, imageUrl: uploadedUrl, aspectRatio }
       if (mode === 'create' && !prompt.trim()) { setError('Qanday foto xohlayotganingizni yozing'); setIsBusy(false); return }
-      const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); const data = await res.json()
+      const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', ...galleryHeaders() }, body: JSON.stringify(body) }); const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Amal bajarilmadi')
       if (mode === 'analyze') setAnalysis(data.analysis); else { setResultUrl(data.url); mutate('/api/gallery') }
     } catch (err) { setError(err instanceof Error ? err.message : 'Amal bajarilmadi') } finally { setIsBusy(false) }
