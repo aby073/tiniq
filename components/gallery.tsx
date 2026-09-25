@@ -50,7 +50,7 @@ export function Gallery() {
         {authLoading ? (
           <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
         ) : !user ? (
-          <div className="rounded-2xl border border-dashed border-border py-16 text-center text-muted-foreground"><p className="text-sm">Galereyani ko‘rish uchun tizimga kiring.</p></div>
+          <div className="rounded-2xl border border-dashed border-border py-16 text-center text-muted-foreground"><p className="text-sm">{t('signInToGallery')}</p></div>
         ) : isLoading ? (
           <div className="flex justify-center py-16">
             <Loader2 className="h-6 w-6 animate-spin text-primary" />
@@ -73,7 +73,7 @@ export function Gallery() {
               >
                 <Image
                   src={item.url || '/placeholder.svg'}
-                  alt="Yaratilgan mahsulot fotosi"
+                  alt={t('generatedProductPhoto')}
                   width={480}
                   height={480}
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
@@ -86,7 +86,7 @@ export function Gallery() {
                     download
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Yuklab olish"
+                    aria-label={t('download')}
                     className="flex h-9 w-9 items-center justify-center rounded-full bg-background text-foreground shadow transition-transform hover:scale-105"
                   >
                     <Download className="h-4 w-4" />
@@ -95,7 +95,7 @@ export function Gallery() {
                     type="button"
                     onClick={() => handleDelete(item.url)}
                     disabled={deleting === item.url}
-                    aria-label="O'chirish"
+                    aria-label={t('delete')}
                     className="flex h-9 w-9 items-center justify-center rounded-full bg-background text-destructive shadow transition-transform hover:scale-105 disabled:opacity-60"
                   >
                     {deleting === item.url ? (
